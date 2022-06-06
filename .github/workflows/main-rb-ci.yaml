@@ -1,0 +1,46 @@
+name: Main CI
+
+on: push
+  # schedule:
+  #   - cron:  '0 1 * * 1'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  run-ruby:
+    name: 'Production AWS'
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Configure AWS credentials
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        role-session-name: GitHubWorkflow
+
+    # Add or replace dependency steps here
+    - name: Install Ruby and gems
+      uses: ruby/setup-ruby@v1
+
+    - name: Bundle install
+      run: bundle install
+
+    # Run the main.rb file
+    - name: Run the app
+      run: ruby lib/main.rb
+      env:
+        token: ${{ secrets.TECH_SERVICES_GITHUB_TOKEN }}
+        AWS_ROLE_ARN: ${{ secrets.ASSUME_ROLE }}
+        repo: "ministryofjustice/aws-ta-testing"
