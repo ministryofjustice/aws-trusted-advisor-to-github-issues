@@ -14,11 +14,11 @@ checks = aws_client.describe_trusted_advisor_checks({
   language: "en"
 })
 
-repo = ENV["repo"]
+REPO = ENV["repo"]
 
 issue_titles = []
 
-github_client.list_issues(repo)
+github_client.list_issues(REPO)
 
 last_response = github_client.last_response
 
@@ -69,7 +69,7 @@ checks.checks.each do |check|
         body += "\n#{m.flatten().join(": ")}" }
       end
 
-      github_client.create_issue(repo, check.name, body, :labels => [check.category, resp.summaries[0].status])
+      github_client.create_issue(REPO, check.name, body, :labels => [check.category, resp.summaries[0].status])
       puts github_client.last_response
       sleep 2
     end
