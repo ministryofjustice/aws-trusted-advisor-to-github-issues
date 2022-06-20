@@ -30,16 +30,16 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-session-name: GitHubWorkflow
 
-    # Add or replace dependency steps here
     - name: Install Ruby and gems
       uses: ruby/setup-ruby@v1
-
+      
     - name: Bundle install
       run: bundle install
 
     # Run the main.rb file
     - name: Run the app
-      run: ruby lib/main.rb
+      run: ruby lib/main.rb 
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       env:
         token: ${{ secrets.TECH_SERVICES_GITHUB_TOKEN }}
         AWS_ROLE_ARN: ${{ secrets.ASSUME_ROLE }}
