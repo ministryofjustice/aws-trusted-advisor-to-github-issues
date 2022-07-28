@@ -20,7 +20,7 @@ The GitHub action is setup as follows:
 
 - Issues contain the Check, Category Status, Flagged Resources, Description etc as described [here](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Support/Client.html#describe_trusted_advisor_checks-instance_method).
 
-- Since the AWS SDK returns _all_ AWS Trusted Advisory alerts - _regardless of their status_ - we filter for `error` and `warning` statuses [here](https://github.com/ministryofjustice/aws-trusted-advisor-to-github-issues/blob/main/lib/main.rb#:~:text=if%20statuses.include%3F(resp.summaries%5B0%5D.status)).
+- Since the AWS SDK returns _all_ AWS Trusted Advisory alerts - _regardless of their status_ - we filter for `error` and `warning` statuses [here](https://github.com/ministryofjustice/aws-trusted-advisor-to-github-issues/blob/1647fbab07e29aa5bbf0a7baf3cd4d8a1ce120d9/lib/main.rb#L39).
 
 - Creates GitHub Issues for _all_ of the categories, also labels each Issue with its respective category:
   - `cost_optimizing`
