@@ -2,5 +2,5 @@
 
 source "https://rubygems.org"
 
-gem 'octokit', '~> 4.25'
+gem 'octokit', '~> 6.0'
 gem 'aws-sdk-support', '~> 1.41'
